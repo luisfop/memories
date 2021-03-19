@@ -8,6 +8,8 @@ import postsRoutes from './routes/post.js';
 const app = express();
 
 
+app.use(cors());
+
 //Routes
 app.use('/posts', postsRoutes);
 
@@ -17,7 +19,7 @@ app.use('/posts', postsRoutes);
 
 app.use(bodyParser.json({limit: "30mb", extended: true}))
 app.use(bodyParser.urlencoded({limit: "30mb", extended: true}))
-app.use(cors());
+
 
 
 
