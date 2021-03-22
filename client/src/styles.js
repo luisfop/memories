@@ -16,4 +16,7 @@ export default makeStyles(() => ({
       image: {
         marginLeft: '15px',
       },
+      teste:{
+        border: 'solid black 2px',
+      }
 }));
