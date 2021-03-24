@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import { Typography, Button, Paper, TextField } from "@material-ui/core";
 import FileBase from 'react-file-base64';
 
+import { createPost } from '../../actions/posts';
+import { useDispatch } from 'react-redux';
+
 import useStyles from "./styles";
 
 const Form = () => {
-  const classes = useStyles();
-
+  
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -16,8 +18,15 @@ const Form = () => {
     selectedFile: ""
   });
 
-  const handleSubmit = () => {
-    console.log("SUBMMITED");
+  const classes = useStyles();
+  const dispatch = useDispatch()
+
+
+  //methods
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(createPost(postData)); 
+    console.log("SUBMMITED", postData);
   };
 
   const clear = () => {

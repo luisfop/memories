@@ -14,7 +14,20 @@ export const getPosts = () => async(dispatch) => {
         
         
     }catch(error){
-        console.log('ERROR DISPATCHING ACTION => ',error.message);
+        console.log('ERROR GETTING POST => ',error.message);
     }
 
 } 
+
+
+export const createPost = (post) => async (dispatch) => {
+    try{
+        const { data } = await api.createPost(post);
+        // const resp = await api.createPost(post);
+        
+        dispatch({type:'CREATE', payload: data})
+
+    }catch(error){
+        console.log('ERROR CREATING POST ->', error.message);
+    }
+}
