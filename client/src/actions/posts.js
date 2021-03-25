@@ -14,7 +14,7 @@ export const getPosts = () => async(dispatch) => {
         
         
     }catch(error){
-        console.log('ERROR GETTING POST => ',error.message);
+        console.log('ERROR GETTING POST => ',error);
     }
 
 } 
@@ -28,6 +28,18 @@ export const createPost = (post) => async (dispatch) => {
         dispatch({type:'CREATE', payload: data})
 
     }catch(error){
-        console.log('ERROR CREATING POST ->', error.message);
+        console.log('ERROR CREATING POST ->', error);
+    }
+}
+
+export const updatePost = (id, post) => async (dispatch) => {
+    try{
+
+        const { data } = await api.updatePost(id,post);
+        // const response = await api.updatedPost(id,post);
+
+        dispatch({type: 'UPDATE', payload: data});
+    }catch(error){
+        console.log('ERROR UPDATING POST ->', error);
     }
 }

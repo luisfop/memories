@@ -1,14 +1,16 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Typography, Button, Paper, TextField } from "@material-ui/core";
 import FileBase from "react-file-base64";
 
-import { createPost } from "../../actions/posts";
+import { createPost, updatePost } from "../../actions/posts";
+
+import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 
 import useStyles from "./styles";
 
-const Form = () => {
+const Form = ({ currentId, setCurrentId }) => {
   const [postData, setPostData] = useState({
     creator: "",
     title: "",
@@ -17,18 +19,39 @@ const Form = () => {
     selectedFile: ""
   });
 
+  //FETCH FROM REDUX - UpdatePost
+  const post = useSelector(state =>
+    currentId ? state.posts.find(p => p._id === currentId) : null
+  );
+
   const classes = useStyles();
   const dispatch = useDispatch();
 
-  //methods
+  useEffect(() => {
+    //if post exists populate postData / update
+    if (post) {
+      setPostData(post);
+    }
+  }, [post]);
+
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(createPost(postData));
+
+    //Ff current id is not null
+    if (currentId) {
+      dispatch(updatePost(currentId, postData));
+      
+    } else {
+      dispatch(createPost(postData));
+    }
     console.log("SUBMMITED", postData);
+
+    clear();
   };
 
   const clear = () => {
-    console.log("cleared");
+    setCurrentId(0);
+    setPostData({ creator: "", title: "", message: "", tags: "", selectedFile: "" })
   };
 
   return (
@@ -39,7 +62,9 @@ const Form = () => {
         className={`${classes.root} ${classes.form}`}
         onSubmit={handleSubmit}
       >
-        <Typography variant="h6">Create a Memory</Typography>
+        <Typography variant="h6">
+          {currentId ? "Editing" : "Create"} a Memory
+        </Typography>
         <TextField
           variant="outlined"
           label="Creator"
@@ -95,7 +120,7 @@ const Form = () => {
           onClick={clear}
           fullWidth
         >
-          Submit
+          Clear
         </Button>
       </form>
     </Paper>
