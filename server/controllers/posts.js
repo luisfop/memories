@@ -6,7 +6,7 @@ import mongoose from 'mongoose'
 export const getPosts = async (req , res) => {
     try{
         const postMessages = await PostMessage.find();
-        console.log('Get posts Succefully');
+        // console.log('Get posts Succefully');
         res.status(201).json(postMessages);
     }catch(error){
         console.log('ERROR GETTING POSTS ->', error);
@@ -43,4 +43,17 @@ export const updatePost = async (req,res) => {
     const updatedPost = await PostMessage.findByIdAndUpdate(_id, {...post , _id}, {new:true } );
 
     res.json(updatedPost);
+}
+
+
+export const deletePost = async(req,res) => {
+    const {id} = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(id)) return res.status(404).send('No post with that id!');
+
+    await PostMessage.findByIdAndRemove(id)
+
+    res.json({message: 'Post deleted Sucessfully'});
+
+
 }

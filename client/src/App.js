@@ -14,6 +14,7 @@ import { getPosts } from './actions/posts';
 const App = () => {
 
   const [ currentId, setCurrentId ] = useState(null);
+  // const [ deletePost, setDeletePost ] = useState(null);
 
   const classes = useStyles();
   const dispatch = useDispatch();

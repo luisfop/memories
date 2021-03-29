@@ -19,13 +19,15 @@ const Form = ({ currentId, setCurrentId }) => {
     selectedFile: ""
   });
 
+  const classes = useStyles();
+  const dispatch = useDispatch();
+
+
   //FETCH FROM REDUX - UpdatePost
   const post = useSelector(state =>
     currentId ? state.posts.find(p => p._id === currentId) : null
   );
 
-  const classes = useStyles();
-  const dispatch = useDispatch();
 
   useEffect(() => {
     //if post exists populate postData / update
@@ -37,7 +39,6 @@ const Form = ({ currentId, setCurrentId }) => {
   const handleSubmit = e => {
     e.preventDefault();
 
-    //Ff current id is not null
     if (currentId) {
       dispatch(updatePost(currentId, postData));
       
