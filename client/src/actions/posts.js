@@ -1,5 +1,7 @@
 import * as api from "../api/index";
 
+//4
+
 //Action Creators
 //redux-thunk
 export const getPosts = () => async dispatch => {
@@ -45,3 +47,14 @@ export const deletePost = id => async dispatch => {
     console.log("ERROR DELETING POST -> ", error);
   }
 };
+
+
+export const likePost = (id) => async(dispatch) => {
+    try{
+
+        const { data } = await api.likePost(id);
+        dispatch({type: 'LIKE', paylaod: data});
+    }catch(error){
+        console.log('ERROR LIKING THIS POST', error);
+    }
+}
