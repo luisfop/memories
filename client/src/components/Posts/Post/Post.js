@@ -51,11 +51,10 @@ const Post = ({ post , setCurrentId }) => {
         <Typography  variant="p" gutterBottom>{post.message } </Typography>
       </CardContent>
 
-
       <CardActions>
         <Button size="small" color="primary" onClick={() => dispatch(likePost(post._id))}>
           <ThumbAltIcon fontSize="small" />
-          Like
+          &nbsp; Like &nbsp;
           {post.likeCount}
         </Button>
         <Button size="small" color="primary" onClick={() => dispatch(deletePost(post._id))}>
